@@ -1,10 +1,7 @@
 <template>
     <div>
         <div class="h-screen">
-
-        </div>
-        <div class="h-screen">
-
+            blog page
         </div>
     </div>
 </template>

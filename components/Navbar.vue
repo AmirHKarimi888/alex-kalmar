@@ -29,7 +29,7 @@
             </div>
         </nav>
 
-
+        <!-- eslint-disable -->
         <Drawer v-model:visible="visibleRight" header="" position="right" class="w-[200px]">
 
                 <ul class="flex flex-col text-zinc-600 dark:text-zinc-100 font-bold">

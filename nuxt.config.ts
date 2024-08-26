@@ -14,6 +14,16 @@ export default defineNuxtConfig({
   css: [
     "./assets/style.css",
   ],
+  app: {
+    head: {
+      charset: "utf-8",
+      viewport: 'width=device-width, initial-scale=1',
+      title: "KALMAR",
+      link: [
+        { href: "./public/logo.png", rel: "icon" }
+      ]
+    }
+  },
   primevue: {
     options: {
       theme: {
@@ -35,4 +45,5 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  ssr: false
 })

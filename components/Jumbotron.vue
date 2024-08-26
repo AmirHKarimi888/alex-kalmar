@@ -9,9 +9,9 @@
                 <p class="mb-8 text-lg font-normal text-gray-100 lg:text-xl sm:px-16 lg:px-48">Lorem ipsum dolor sit
                     amet consectetur adipisicing elit. Eveniet, rem!</p>
                 <div class="flex flex-row justify-center space-y-0">
-                    <a href="#"
+                    <a href="#LatestPosts"
                         class="inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 sm:ms-4 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-400">
-                        Learn more
+                        Continue
                     </a>
                 </div>
             </div>
