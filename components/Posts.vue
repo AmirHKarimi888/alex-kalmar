@@ -55,7 +55,8 @@ const { getPosts } = postsStore;
 const { posts } = storeToRefs(postsStore);
 
 onBeforeMount(() => {
-    getPosts(1, 6)
+    try {
+        getPosts(1, 6)
         .then(() => {
             posts.value.filter(async (post: any) => {
                 await fetch(`${import.meta.env.VITE_DB_URL}api/files/posts/${post?.id}/${post?.poster}`)
@@ -65,6 +66,9 @@ onBeforeMount(() => {
                     })
             })
         })
+    } catch (err: any) {
+        console.log(err?.message)
+    }
 });
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "Septempber", "October", "November", "December"];
