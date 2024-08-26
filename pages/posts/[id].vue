@@ -1,11 +1,9 @@
 <template>
-    <div>
-        <div class="w-full py-40 min-h-screen flex flex-col justify-center items-center">
+    <div class="w-full h-screen grid justify-center items-center">
+        <div class="mx-auto">
             <Suspense>
-                <div class="flex flex-col justify-center items-center">
-                    <Posts />
-                </div>
-
+                <Post />
+    
                 <template #fallback>
                     <Spinner />
                 </template>

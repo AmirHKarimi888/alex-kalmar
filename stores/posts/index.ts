@@ -3,6 +3,7 @@ import { pb } from "~/pocketbase";
 export const usePostsStore = defineStore("posts", () => {
     const posts = ref<any[]>([]);
     const popularPosts = ref<any[]>([]);
+    const selectedPost = ref<any>({});
 
     const getPosts = async (page: number, perPage: number) => {
         await pb.collection('posts').getList(page, perPage, {
@@ -10,6 +11,11 @@ export const usePostsStore = defineStore("posts", () => {
             filter: "show = " + "" + true + "" + ""
         })
         .then((data: any) => posts.value = data?.items)
+    }
+
+    const getPost = async (id: string) => {
+        await pb.collection('posts').getOne(id)
+        .then(data => selectedPost.value = data);
     }
 
     const getPopularPosts = async () => {
@@ -20,5 +26,5 @@ export const usePostsStore = defineStore("posts", () => {
         .then((data: any) => popularPosts.value = data)
     }
 
-    return { posts, popularPosts, getPosts, getPopularPosts }
+    return { posts, popularPosts, selectedPost, getPosts, getPopularPosts, getPost }
 })

@@ -20,7 +20,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1',
       title: "KALMAR",
       link: [
-        { href: "./public/logo.png", rel: "icon" }
+        { href: "./logo.png", rel: "icon" }
       ]
     }
   },

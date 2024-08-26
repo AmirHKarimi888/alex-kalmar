@@ -5,3 +5,7 @@
 .dark {
     @apply dark:bg-zinc-900
 }
+
+.router-link-exact-active {
+    @apply text-sky-500
+}
