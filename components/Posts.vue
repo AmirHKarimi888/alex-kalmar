@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+import { dbUrl } from "~/pocketbase";
 import { usePostsStore } from "../stores/posts";
 
 const postsStore = usePostsStore();
@@ -71,7 +72,7 @@ try {
     await getPosts(1, 6)
         .then(() => {
             posts.value.filter(async (post: any) => {
-                await fetch(`${import.meta.env.VITE_DB_URL}api/files/posts/${post?.id}/${post?.poster}`)
+                await fetch(`${dbUrl}api/files/posts/${post?.id}/${post?.poster}`)
                     .then(response => response.blob())
                     .then(blob => {
                         post.poster = URL.createObjectURL(blob)
