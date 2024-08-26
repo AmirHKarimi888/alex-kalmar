@@ -2,8 +2,6 @@
 import Aura from "@primevue/themes/aura";
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
-  devtools: { enabled: true },
   modules: [
     '@primevue/nuxt-module',
     '@pinia/nuxt',
@@ -11,9 +9,11 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@vueuse/motion/nuxt'
   ],
+
   css: [
     "./assets/style.css",
   ],
+
   app: {
     head: {
       charset: "utf-8",
@@ -24,6 +24,7 @@ export default defineNuxtConfig({
       ]
     }
   },
+
   primevue: {
     options: {
       theme: {
@@ -39,11 +40,14 @@ export default defineNuxtConfig({
     },
     autoImport: true,
   },
+
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
-  ssr: false
+
+  ssr: false,
+  compatibilityDate: '2024-08-27'
 })
