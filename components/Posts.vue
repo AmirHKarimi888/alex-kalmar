@@ -50,8 +50,8 @@
                 <div>
                     <NuxtLink :to="`/posts/${post?.id}`">
                         <button
-                        class="p-2 bg-black text-white border hover:border-black hover:bg-white hover:text-black duration-200 mt-3 tracking-wider">Read
-                        Full</button>
+                            class="p-2 bg-black text-white border hover:border-black hover:bg-white hover:text-black duration-200 mt-3 tracking-wider">Read
+                            Full</button>
                     </NuxtLink>
                 </div>
             </div>
@@ -64,25 +64,32 @@ import { dbUrl } from "~/pocketbase";
 import { usePostsStore } from "../stores/posts";
 
 const postsStore = usePostsStore();
+const props = defineProps<{
+    page: number,
+    perPage: number
+}>()
 
 const { getPosts } = postsStore;
 const { posts } = storeToRefs(postsStore);
 
-try {
-    await getPosts(1, 6)
-        .then(() => {
-            posts.value.filter(async (post: any) => {
-                await fetch(`${dbUrl}api/files/posts/${post?.id}/${post?.poster}`)
-                    .then(response => response.blob())
-                    .then(blob => {
-                        post.poster = URL.createObjectURL(blob)
-                    })
+const getThesePosts = async () => {
+    try {
+        await getPosts(props.page, props.perPage)
+            .then(() => {
+                posts.value.filter(async (post: any) => {
+                    await fetch(`${dbUrl}api/files/posts/${post?.id}/${post?.poster}`)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            post.poster = URL.createObjectURL(blob)
+                        })
+                })
             })
-        })
 
-} catch (err: any) {
-    console.log(err?.message);
+    } catch (err: any) {
+        console.log(err?.message);
+    }
 }
+await getThesePosts();
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "Septempber", "October", "November", "December"];
 
@@ -94,6 +101,9 @@ const created = (post: any) => {
     return `${day}${+day === 1 ? 'st' : +day === 2 ? 'nd' : +day === 3 ? 'rd' : 'th'} ${month} ${year}`;
 }
 
+watch(props, async () => {
+    await getThesePosts();
+})
 </script>
 
 <style scoped></style>
