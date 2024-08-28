@@ -27,7 +27,9 @@
 </template>
 
 <script setup lang="ts">
-
+useHead({
+    title: "KALMAR - Designer, Song Writer, Enterpreneur; a Polymath"
+})
 </script>
 
 <style scoped></style>

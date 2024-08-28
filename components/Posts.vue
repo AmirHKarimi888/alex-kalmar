@@ -79,7 +79,7 @@ const getThesePosts = async () => {
                     await fetch(`${dbUrl}api/files/posts/${post?.id}/${post?.poster}`)
                         .then(response => response.blob())
                         .then(blob => {
-                            post.poster = URL.createObjectURL(blob)
+                            post.poster = URL.createObjectURL(blob);
                         })
                 })
             })

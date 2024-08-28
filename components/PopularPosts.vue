@@ -8,7 +8,7 @@
                     </div>
 
                     <div>
-                        <img class="w-full aspect-video" :src="slotProps.data?.poster" :alt="slotProps.data?.title">
+                        <img class="w-full lg:aspect-video md:aspect-video sm:aspect-square max-sm:aspect-square" :src="slotProps.data?.blobPoster" :alt="slotProps.data?.title">
                     </div>
                 </div>
 
@@ -40,11 +40,11 @@ const { popularPosts } = storeToRefs(postsStore);
 onBeforeMount(() => {
     getPopularPosts();
 
-    popularPosts.value.filter(async (post: any) => {
+    popularPosts.value = popularPosts.value.filter(async (post: any) => {
         await fetch(`${dbUrl}api/files/posts/${post?.id}/${post?.poster}`)
             .then(response => response.blob())
             .then(blob => {
-                post.poster = URL.createObjectURL(blob)
+                post.blobPoster = URL.createObjectURL(blob);
             })
     })
 });
