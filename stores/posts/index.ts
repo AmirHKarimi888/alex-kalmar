@@ -27,12 +27,10 @@ export const usePostsStore = defineStore("posts", () => {
         .then(data => selectedPost.value = data);
     }
 
-    const getPopularPosts = async () => {
-        await pb.collection('posts').getList(1, 3, {
-            sort: "-created " + "&&" + " -likes",
-            filter: "show = " + "" + true + "" + ""
-        })
-        .then((data: any) => popularPosts.value = data)
+    const getPopularPosts = () => {
+        popularPosts.value = 
+        allPosts.value.sort((a: any, b: any) => a?.likes.length - b?.likes.length)
+        .slice(0, 3)
     }
 
     return { posts, popularPosts, selectedPost, allPosts, getPosts, getPopularPosts, getPost, getAllPosts }

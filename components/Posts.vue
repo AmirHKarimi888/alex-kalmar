@@ -1,7 +1,6 @@
 <template>
     <ul class="mx-auto md:w-[80%] sm:w-[85%] max-sm:w-[90%] grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
-        <li v-for="post in posts" :key="post"
-            class="border border-zinc-300 shadow-xl shadow-zinc-300 p-5 bg-zinc-100 flex flex-col justify-between">
+        <li v-for="post in posts" :key="post" class="border border-zinc-300 shadow-xl shadow-zinc-300 p-5 bg-zinc-100 flex flex-col justify-between" v-motion :initial="{ opacity: 0, scale: 0.7 }" :visible-once="{ opacity: 1, scale: 1 }" :delay="200" :duration="1200">
             <div>
                 <div class="pb-3 border-b text-zinc-500 text-sm tracking-wider">
                     <div>
