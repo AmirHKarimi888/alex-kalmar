@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full py-40 min-h-screen flex flex-col justify-center items-center">
+        <div class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
                     <Posts :page="page" :perPage="6" />

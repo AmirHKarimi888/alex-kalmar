@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full h-screen grid justify-center items-center">
+    <div class="w-full min-h-screen">
         <div class="mx-auto">
             <Suspense>
                 <Post />

@@ -24,6 +24,14 @@
                         <li>
                             <NuxtLink to="/blog">Blog</NuxtLink>
                         </li>
+
+                        <li>
+                            <NuxtLink to="/landscape">Landscape</NuxtLink>
+                        </li>
+
+                        <li>
+                            <NuxtLink to="/travel">Travel</NuxtLink>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -39,6 +47,14 @@
 
                     <li class="p-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
                         <NuxtLink to="/blog">Blog</NuxtLink>
+                    </li>
+
+                    <li class="p-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                        <NuxtLink to="/landscape">Landscape</NuxtLink>
+                    </li>
+
+                    <li class="p-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                        <NuxtLink to="/travel">Travel</NuxtLink>
                     </li>
                 </ul>
         </Drawer>
