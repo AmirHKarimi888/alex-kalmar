@@ -26,11 +26,15 @@
                         </li>
 
                         <li>
-                            <NuxtLink to="/landscape">Landscape</NuxtLink>
+                            <NuxtLink to="/sound">Sound Engineering</NuxtLink>
                         </li>
 
                         <li>
                             <NuxtLink to="/travel">Travel</NuxtLink>
+                        </li>
+
+                        <li>
+                            <NuxtLink to="/design">Design</NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -41,20 +45,24 @@
         <Drawer v-model:visible="visibleRight" header="" position="right" class="w-[200px]">
 
                 <ul class="flex flex-col text-zinc-600 dark:text-zinc-100 font-bold">
-                    <li class="p-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
                         <NuxtLink to="/">Home</NuxtLink>
                     </li>
 
-                    <li class="p-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
                         <NuxtLink to="/blog">Blog</NuxtLink>
                     </li>
 
-                    <li class="p-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
-                        <NuxtLink to="/landscape">Landscape</NuxtLink>
+                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                        <NuxtLink to="/sound">Sound Engineering</NuxtLink>
                     </li>
 
-                    <li class="p-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
                         <NuxtLink to="/travel">Travel</NuxtLink>
+                    </li>
+
+                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                        <NuxtLink to="/design">Design</NuxtLink>
                     </li>
                 </ul>
         </Drawer>

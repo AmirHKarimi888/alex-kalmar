@@ -33,5 +33,34 @@ export const usePostsStore = defineStore("posts", () => {
         .slice(0, 3)
     }
 
-    return { posts, popularPosts, selectedPost, allPosts, getPosts, getPopularPosts, getPost, getAllPosts }
+    const addViews = async (post: any) => {
+        await pb.collection("posts")
+        .update(post?.id, {
+            views: +post?.views + 1
+        })
+    }
+
+
+    "likedPosts" in localStorage ? null : localStorage.setItem("likedPosts", "[]");
+    const likePost = async (post: any) => {
+        let likesStore = JSON.parse(localStorage.getItem("likedPosts") as any);
+        let likes = [];
+
+        if (likesStore.includes(post?.id)) {
+            likes = post?.likes.filter((like: any) => like !== post?.id);
+        } else {
+            likes = [ ...post?.likes, post?.id ]
+        }
+
+        await pb.collection("posts")
+        .update(post?.id, {
+            likes: likes
+        })
+        .then(() => {
+            localStorage.setItem("likedPosts", JSON.stringify(likes));
+            selectedPost.value = { ...selectedPost.value, likes: likes }    
+        })
+    }
+
+    return { posts, popularPosts, selectedPost, allPosts, getPosts, getPopularPosts, getPost, getAllPosts, addViews, likePost }
 })

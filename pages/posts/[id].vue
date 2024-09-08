@@ -5,7 +5,9 @@
                 <Post />
     
                 <template #fallback>
-                    <Spinner />
+                    <div class="w-full h-screen flex justify-center items-center">
+                        <Spinner />
+                    </div>
                 </template>
             </Suspense>
         </div>
