@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full">
-        <div class="lg:w-[60%] md:w-[75%] sm:w-[85%] max-sm:w-[90%] mx-auto mt-32 p-5 bg-zinc-50 shadow-md shadow-zinc-400 box-border">
+    <div class="w-full mt-32 mb-24">
+        <div class="lg:w-[60%] md:w-[75%] sm:w-[85%] max-sm:w-[90%] mx-auto p-5 bg-zinc-50 shadow-md shadow-zinc-400 box-border">
             <div class="w-full p-2 border-b text-zinc-700">
                 <div class="flex text-xs gap-3 mt-1">
                     <span class="flex items-center gap-1">
@@ -26,7 +26,7 @@
                     </span>
                 </div>
 
-                <div class="flex flex-col text-xs gap-1 my-2 font-bold">
+                <div class="flex flex-col text-xs gap-1 my-2 font-bold tracking-wider">
                     <span class="flex items-center gap-1">
                         Created at {{ created }}
                     </span>

@@ -3,9 +3,9 @@
         <div class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
-                    <Posts :page="page" :perPage="6" />
+                    <Posts :page="page" :perPage="6" :keyWord="'personal'" />
 
-                    <Pagination :current="page" :perPage="6" @changePage="changePage" class="mt-12" />
+                    <Pagination :currentPageNumber="page" :perPage="6" @changePage="changePage" class="mt-12" />
                 </div>
 
                 <template #fallback>

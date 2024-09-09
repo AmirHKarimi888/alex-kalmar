@@ -3,7 +3,7 @@
         <div class="w-full py-40 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
-                    <Posts :page="page" :perPage="6" :key-word="'personal'" />
+                    <Posts :page="page" :perPage="6" :keyWord="'sound'" />
 
                     <Pagination :currentPageNumber="page" :perPage="6" @changePage="changePage" class="mt-12" />
                 </div>

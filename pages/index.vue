@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Jumbotron />
+        <MainJumbotron />
 
         <div id="PopularPosts" class="w-full py-20 min-h-screen flex flex-col justify-center items-center">
             <div class="md:w-[80%] sm:w-[85%] max-sm:w-[90%]">
@@ -15,7 +15,7 @@
                     <div class="md:w-[80%] sm:w-[85%] max-sm:w-[90%]">
                         <h3 class="mb-5 font-bold text-lg tracking-wider">Latest Posts</h3>
                     </div>
-                    <Posts :page="1" :perPage="6" />
+                    <Posts :page="1" :perPage="6" :keyWord="''" />
                 </div>
 
                 <template #fallback>

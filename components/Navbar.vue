@@ -92,7 +92,7 @@ onMounted(() => {
 })
 
 const navbarBg = computed(() => {
-    if (route.path === "/") {
+    if (route.path === "/" || route.path === "/sound") {
         if (!topOfPage.value) {
             return "bg-zinc-800/70";
         }

@@ -65,7 +65,8 @@ import { usePostsStore } from "../stores/posts";
 const postsStore = usePostsStore();
 const props = defineProps<{
     page: number,
-    perPage: number
+    perPage: number,
+    keyWord: string
 }>()
 
 const { getPosts } = postsStore;
@@ -73,7 +74,7 @@ const { posts } = storeToRefs(postsStore);
 
 const getThesePosts = async () => {
     try {
-        await getPosts(props.page, props.perPage)
+        await getPosts(props.page, props.perPage, props.keyWord)
             .then(() => {
                 posts.value.filter(async (post: any) => {
                     await fetch(`${dbUrl}api/files/posts/${post?.id}/${post?.poster}`)
