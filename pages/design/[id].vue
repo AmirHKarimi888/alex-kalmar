@@ -1,6 +1,5 @@
 <template>
     <div>
-        <DesignJumbotron />
         <div class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
@@ -25,9 +24,6 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
     updateThreeMults(page.value);
 }
 
-useHead({
-    title: "Design - KALMAR"
-})
 </script>
 
 <style scoped>

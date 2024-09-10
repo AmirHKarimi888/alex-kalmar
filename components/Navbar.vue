@@ -17,24 +17,31 @@
                 </button>
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex gap-5 text-zinc-100 font-bold">
-                        <li>
-                            <NuxtLink to="/">Home</NuxtLink>
+
+                        <li @mouseenter="dropdownToggle = true">
+                            <div>Categories</div>
+                            <ul @mouseleave="dropdownToggle = false" :class="dropdownToggle ? 'grid' : 'hidden'" class="w-[200px] p-5 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-2">
+        
+                                <li>
+                                    <NuxtLink to="/sound">Sound Engineering</NuxtLink>
+                                </li>
+        
+                                <li>
+                                    <NuxtLink to="/travel">Travel</NuxtLink>
+                                </li>
+        
+                                <li>
+                                    <NuxtLink to="/design">Design</NuxtLink>
+                                </li>
+                            </ul>
                         </li>
-    
+                        
                         <li>
                             <NuxtLink to="/blog">Blog</NuxtLink>
                         </li>
-
+                    
                         <li>
-                            <NuxtLink to="/sound">Sound Engineering</NuxtLink>
-                        </li>
-
-                        <li>
-                            <NuxtLink to="/travel">Travel</NuxtLink>
-                        </li>
-
-                        <li>
-                            <NuxtLink to="/design">Design</NuxtLink>
+                            <NuxtLink to="/">Home</NuxtLink>
                         </li>
                     </ul>
                 </div>
@@ -73,6 +80,8 @@
 const topOfPage = ref(true);
 const visibleRight = ref(false);
 
+const dropdownToggle = ref(false);
+
 const route = useRoute();
 
 const handleScroll = () => {
@@ -92,7 +101,7 @@ onMounted(() => {
 })
 
 const navbarBg = computed(() => {
-    if (route.path === "/" || route.path === "/sound") {
+    if (route.path === "/" || route.path === "/sound" || route.path === "/travel" || route.path === "/design") {
         if (!topOfPage.value) {
             return "bg-zinc-800/70";
         }

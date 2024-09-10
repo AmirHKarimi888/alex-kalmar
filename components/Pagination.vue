@@ -63,8 +63,6 @@ if (route.path.includes("blog")) {
     thisAllPosts.value = allPosts.value.filter((post: any) => post?.blogName === "sound")
 }
 
-console.log(thisAllPosts.value)
-
 const props = defineProps<{
     currentPageNumber: number,
     perPage: number

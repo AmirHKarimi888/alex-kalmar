@@ -16,6 +16,7 @@
     "@vueuse/core": "^11.0.3",
     "@vueuse/motion": "^2.2.3",
     "@vueuse/nuxt": "^11.0.3",
+    "flowbite": "^2.5.1",
     "nuxt": "^3.12.4",
     "pinia": "^2.2.2",
     "pocketbase": "^0.21.4",
