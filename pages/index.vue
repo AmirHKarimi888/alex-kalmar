@@ -23,6 +23,8 @@
                 </template>
             </Suspense>
         </div>
+
+        <Contact />
     </div>
 </template>
 

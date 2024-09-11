@@ -27,6 +27,10 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
     page.value = newPage;
     updateThreeMults(page.value);
 }
+
+useHead({
+    title: "Travel - KALMAR"
+})
 </script>
 
 <style scoped>

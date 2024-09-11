@@ -24,6 +24,9 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
     updateThreeMults(page.value);
 }
 
+useHead({
+    title: "Design - KALMAR"
+})
 </script>
 
 <style scoped>

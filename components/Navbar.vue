@@ -18,7 +18,7 @@
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex gap-5 text-zinc-100 font-bold">
 
-                        <li @mouseenter="dropdownToggle = true">
+                        <li @mouseenter="dropdownToggle = true" class="cursor-pointer">
                             <div>Categories</div>
                             <ul @mouseleave="dropdownToggle = false" :class="dropdownToggle ? 'grid' : 'hidden'" class="w-[200px] p-5 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-2">
         
