@@ -72,6 +72,10 @@ const props = defineProps<{
 const { getPosts } = postsStore;
 const { posts } = storeToRefs(postsStore);
 
+const getFormattedDate = useDateFormatter();
+
+const created = (post: any) => getFormattedDate(post?.created);
+
 const getThesePosts = async () => {
     try {
         await getPosts(props.page, props.perPage, props.keyWord)
@@ -90,16 +94,6 @@ const getThesePosts = async () => {
     }
 }
 await getThesePosts();
-
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "Septempber", "October", "November", "December"];
-
-const created = (post: any) => {
-    let dateList = post?.created.split("-");
-    let year = dateList[0];
-    let month = months[+dateList[1] - 1];
-    let day = dateList[2].split(" ")[0]
-    return `${day}${+day === 1 ? 'st' : +day === 2 ? 'nd' : +day === 3 ? 'rd' : 'th'} ${month} ${year}`;
-}
 
 watch(props, async () => {
     await getThesePosts();

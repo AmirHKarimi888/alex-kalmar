@@ -18,6 +18,11 @@
 </template>
 
 <script setup lang="ts">
+
+const route = useRoute();
+
+console.log(route.name);
+
 const page = ref(1);
 
 const changePage = (newPage: number, updateThreeMults: Function) => {

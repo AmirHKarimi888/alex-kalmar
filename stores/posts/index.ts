@@ -6,6 +6,8 @@ export const usePostsStore = defineStore("posts", () => {
     const popularPosts = ref<any[]>([]);
     const selectedPost = ref<any>({});
 
+    const comments = ref<any[]>([]);
+
     const getAllPosts = async () => {
         await pb.collection('posts').getFullList({
             sort: '-created',
@@ -42,24 +44,33 @@ export const usePostsStore = defineStore("posts", () => {
 
 
     "likedPosts" in localStorage ? null : localStorage.setItem("likedPosts", "[]");
-    const likePost = async (post: any) => {
-        let likes = [];
-
-        if (JSON.parse(localStorage.getItem("likedPosts") as any).includes(post?.id)) {
-            likes = post?.likes.filter((like: any) => like !== post?.id);
-        } else {
-            likes = [ ...post?.likes, post?.id ]
-        }
-
+    const likePost = async (post: any, likes: any) => {
         await pb.collection("posts")
         .update(post?.id, {
             likes: likes
         })
-        .then(() => {
-            localStorage.setItem("likedPosts", JSON.stringify(likes));
-            selectedPost.value = { ...selectedPost.value, likes: likes }    
+    }
+
+    const leaveComment = async (comment: any, post: any) => {
+        await pb.collection("comments")
+        .create(comment)
+        .then(async (data) => {
+            await pb.collection("posts")
+            .update(post?.id, {
+                comments: [...post?.comments, data?.id]
+            })
         })
     }
 
-    return { posts, popularPosts, selectedPost, allPosts, getPosts, getPopularPosts, getPost, getAllPosts, addViews, likePost }
+    const deleteComment = async (id: string) => {
+        await pb.collection("comments")
+        .delete(id)
+    }
+
+    const getComment = async (id: string) => {
+        return await pb.collection("comments")
+        .getOne(id)
+    }
+
+    return { posts, popularPosts, selectedPost, allPosts, comments, getPosts, getPopularPosts, getPost, getAllPosts, addViews, likePost, leaveComment, deleteComment, getComment }
 })
