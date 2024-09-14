@@ -40,6 +40,7 @@ const getFormattedDate = useDateFormatter();
 
 const created = (comment: any) => getFormattedDate(comment?.created);
 
+comments.value = [];
 props.post?.comments.forEach(async (comment: any) => {
     comments.value.unshift(await getComment(comment));
 })

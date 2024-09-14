@@ -16,7 +16,7 @@
                             <path fill="currentColor"
                                 d="m12 21l-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812T2.388 10.4T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55t2.475-.55q2.35 0 3.925 1.575T22 8.15q0 1.15-.387 2.25t-1.363 2.412t-2.625 2.963T13.45 19.7z" />
                         </svg>
-                        {{ selectedPost?.likes?.length }}
+                        {{ selectedPost?.likes }}
                     </span>
                     <span class="flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
@@ -43,29 +43,13 @@
 
             <div class="w-full p-2 text-zinc-700 mt-5">
                 <div class="flex text-xs gap-3 mt-1">
-                    <span class="flex items-center gap-1 cursor-pointer" @click="like">
-                        <svg v-if="isLiked" class="text-red-600" xmlns="http://www.w3.org/2000/svg" width="32"
-                            height="32" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="m12 21l-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812T2.388 10.4T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55t2.475-.55q2.35 0 3.925 1.575T22 8.15q0 1.15-.387 2.25t-1.363 2.412t-2.625 2.963T13.45 19.7z" />
-                        </svg>
-                        <svg v-else xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M12 20.325q-.35 0-.712-.125t-.638-.4l-1.725-1.575q-2.65-2.425-4.788-4.812T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.325 0 2.5.562t2 1.538q.825-.975 2-1.537t2.5-.563q2.35 0 3.925 1.575T22 8.15q0 2.875-2.125 5.275T15.05 18.25l-1.7 1.55q-.275.275-.637.4t-.713.125M11.05 6.75q-.725-1.025-1.55-1.563t-2-.537q-1.5 0-2.5 1t-1 2.5q0 1.3.925 2.763t2.213 2.837t2.65 2.575T12 18.3q.85-.775 2.213-1.975t2.65-2.575t2.212-2.837T20 8.15q0-1.5-1-2.5t-2.5-1q-1.175 0-2 .538T12.95 6.75q-.175.25-.425.375T12 7.25t-.525-.125t-.425-.375m.95 4.725" />
-                        </svg>
-                    </span>
-
-                    <span class="flex items-center gap-1 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81c1.66 0 3-1.34 3-3s-1.34-3-3-3s-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65c0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92" />
-                        </svg>
-                    </span>
+                    <LikeBtn />
+                    <CopyToClipBtn />
                 </div>
             </div>
 
             <div class="w-full p-2 text-zinc-700 mt-5 border-t">
-                <LeaveComment />
+                <CommentSection />
                 <Comments :post="selectedPost" />
             </div>
         </div>
@@ -88,8 +72,6 @@ const updated = computed(() => getFormattedDate(selectedPost.value?.updated));
 
 const id = route.params?.id as string;
 
-const isLiked = computed(() => JSON.parse(localStorage.getItem("likedPosts") as any).includes(selectedPost.value?.id));
-
 try {
     await getPost(id)
         .then(async () => await addViews(selectedPost.value))
@@ -107,26 +89,6 @@ onMounted(() => {
 useHead({
     title: `${selectedPost.value?.title} - KALMAR`
 })
-
-const like = async () => {
-    let likes: any = [];
-
-    if (JSON.parse(localStorage.getItem("likedPosts") as any).includes(selectedPost.value?.id)) {
-        likes = selectedPost.value?.likes.filter((like: any) => like !== selectedPost.value?.id);
-    } else {
-        likes = [...selectedPost.value?.likes, selectedPost.value?.id]
-    }
-
-    try {
-        await likePost(selectedPost.value, likes)
-            .then(() => {
-                localStorage.setItem("likedPosts", JSON.stringify(likes));
-                selectedPost.value = { ...selectedPost.value, likes: likes }
-            })
-    } catch (err: any) {
-        null;
-    }
-}
 </script>
 
 <style scoped>

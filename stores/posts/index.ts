@@ -11,7 +11,7 @@ export const usePostsStore = defineStore("posts", () => {
     const getAllPosts = async () => {
         await pb.collection('posts').getFullList({
             sort: '-created',
-            filter: "show = " + "" + true + "" + ""
+            filter: "showPost = " + "" + true + "" + ""
         })
         .then((data: any) => allPosts.value = data)
     }
@@ -19,7 +19,7 @@ export const usePostsStore = defineStore("posts", () => {
     const getPosts = async (page = 1, perPage = 6, keyWord: string) => {
         await pb.collection('posts').getList(page, perPage, {
             sort: '-created',
-            filter: "show = " + "" + true + "" + " && category ~ " + "" + '"' + keyWord + '"' + ""
+            filter: "showPost = " + "" + true + "" + " && category ~ " + "" + '"' + keyWord + '"' + ""
         })
         .then((data: any) => posts.value = data?.items)
     }
@@ -31,7 +31,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     const getPopularPosts = () => {
         popularPosts.value = 
-        allPosts.value.sort((a: any, b: any) => b?.likes.length - a?.likes.length)
+        allPosts.value.sort((a: any, b: any) => b?.likes - a?.likes)
         .slice(0, 3)
     }
 
@@ -44,7 +44,7 @@ export const usePostsStore = defineStore("posts", () => {
 
 
     "likedPosts" in localStorage ? null : localStorage.setItem("likedPosts", "[]");
-    const likePost = async (post: any, likes: any) => {
+    const likePost = async (post: any, likes: number) => {
         await pb.collection("posts")
         .update(post?.id, {
             likes: likes
@@ -53,17 +53,14 @@ export const usePostsStore = defineStore("posts", () => {
 
     "commented" in localStorage ? null : localStorage.setItem("commented", "[]");
     const leaveComment = async (comment: any, post: any) => {
-        await pb.collection("comments")
+        return await pb.collection("comments")
         .create(comment)
-        .then(async (data) => {
+        .then(async (data: any) => {
             await pb.collection("posts")
             .update(post?.id, {
                 comments: [...post?.comments, data?.id]
             })
-            .then (() => {
-                comments.value.unshift(data);
-                localStorage.setItem("commented", JSON.stringify([...JSON.parse(localStorage.getItem("commented") as any), data?.id]));
-            })
+            return data;
         })
     }
 

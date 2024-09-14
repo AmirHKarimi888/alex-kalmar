@@ -15,7 +15,6 @@
 import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
-
 const { getAllPosts } = postsStore;
 
 try {

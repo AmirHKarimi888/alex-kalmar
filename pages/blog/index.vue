@@ -20,7 +20,6 @@
 import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
-
 const { posts } = storeToRefs(postsStore);
 
 const page = ref(1);

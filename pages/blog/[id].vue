@@ -19,9 +19,9 @@
 <script setup lang="ts">
 import { usePostsStore } from '~/stores/posts';
 
-const postsStore = usePostsStore();
 const route = useRoute();
 
+const postsStore = usePostsStore();
 const { posts } = storeToRefs(postsStore);
 
 const id = +route.params?.id;
@@ -32,6 +32,7 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
     page.value = newPage;
     updateThreeMults(page.value);
 }
+
 useHead({
     title: "Blog - KALMAR"
 })

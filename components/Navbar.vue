@@ -20,18 +20,19 @@
 
                         <li @mouseenter="dropdownToggle = true" class="cursor-pointer">
                             <div>Categories</div>
-                            <ul @mouseleave="dropdownToggle = false" :class="dropdownToggle ? 'grid' : 'hidden'" class="w-[200px] p-5 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-2">
-        
+                            <ul @mouseleave="dropdownToggle = false" :class="dropdownToggle ? 'grid' : 'hidden'"
+                                class="w-[200px] p-5 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-2">
+
                                 <li v-for="page in pages" :key="page?.id">
                                     <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                                 </li>
                             </ul>
                         </li>
-                        
+
                         <li>
                             <NuxtLink to="/blog">Blog</NuxtLink>
                         </li>
-                    
+
                         <li>
                             <NuxtLink to="/">Home</NuxtLink>
                         </li>
@@ -43,19 +44,20 @@
         <!-- eslint-disable -->
         <Drawer v-model:visible="visibleRight" header="" position="right" class="w-[200px]">
 
-                <ul class="flex flex-col text-zinc-600 dark:text-zinc-100 font-bold">
-                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
-                        <NuxtLink to="/">Home</NuxtLink>
-                    </li>
+            <ul class="flex flex-col text-zinc-600 dark:text-zinc-100 font-bold">
+                <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                    <NuxtLink to="/">Home</NuxtLink>
+                </li>
 
-                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
-                        <NuxtLink to="/blog">Blog</NuxtLink>
-                    </li>
+                <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                    <NuxtLink to="/blog">Blog</NuxtLink>
+                </li>
 
-                    <li v-for="page in pages" :key="page?.id" class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
-                        <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
-                    </li>
-                </ul>
+                <li v-for="page in pages" :key="page?.id"
+                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                    <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
+                </li>
+            </ul>
         </Drawer>
     </div>
 </template>
@@ -89,6 +91,8 @@ onMounted(() => {
     window.scrollY > 0 ? topOfPage.value = false : topOfPage.value = true;
 })
 
+
+
 const navbarBg = computed(() => {
     if (route.path === "/" || selectedPage.value?.hasBanner) {
         if (!topOfPage.value) {
@@ -98,6 +102,18 @@ const navbarBg = computed(() => {
         return "bg-zinc-800/70";
     }
 })
+
+//When page info doesn't exist, the statement above will run else block
+watch(
+    () => route.fullPath,
+    () => {
+        console.log("route fullPath updated", route.fullPath);
+
+        if (route.fullPath.includes("blog") || route.fullPath.includes("posts")) {
+            selectedPage.value = {};
+        }
+    }
+);
 </script>
 
 <style scoped></style>
