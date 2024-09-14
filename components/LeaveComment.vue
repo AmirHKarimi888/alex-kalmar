@@ -40,8 +40,8 @@
 import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
-const { selectedPost, comments } = storeToRefs(postsStore);
-const { leaveComment, deleteComment } = postsStore;
+const { selectedPost } = storeToRefs(postsStore);
+const { leaveComment } = postsStore;
 
 const name = ref("");
 const email = ref("");
@@ -57,12 +57,10 @@ const leave = async () => {
       , selectedPost.value)
       .then(() => {
         selectedPost.value = { ...selectedPost.value, comments: [...selectedPost.value?.comments, selectedPost.value?.id] };
-        comments.value.push({
-          created: "now",
-          name: name.value,
-          email: email.value,
-          message: message.value,
-        })
+
+        name.value = "";
+        email.value = "";
+        message.value = "";
       })
 
   } catch (err: any) {

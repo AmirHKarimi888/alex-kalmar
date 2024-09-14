@@ -22,16 +22,8 @@
                             <div>Categories</div>
                             <ul @mouseleave="dropdownToggle = false" :class="dropdownToggle ? 'grid' : 'hidden'" class="w-[200px] p-5 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-2">
         
-                                <li>
-                                    <NuxtLink to="/sound">Sound Engineering</NuxtLink>
-                                </li>
-        
-                                <li>
-                                    <NuxtLink to="/travel">Travel</NuxtLink>
-                                </li>
-        
-                                <li>
-                                    <NuxtLink to="/design">Design</NuxtLink>
+                                <li v-for="page in pages" :key="page?.id">
+                                    <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                                 </li>
                             </ul>
                         </li>
@@ -60,16 +52,8 @@
                         <NuxtLink to="/blog">Blog</NuxtLink>
                     </li>
 
-                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
-                        <NuxtLink to="/sound">Sound Engineering</NuxtLink>
-                    </li>
-
-                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
-                        <NuxtLink to="/travel">Travel</NuxtLink>
-                    </li>
-
-                    <li class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
-                        <NuxtLink to="/design">Design</NuxtLink>
+                    <li v-for="page in pages" :key="page?.id" class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                        <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                     </li>
                 </ul>
         </Drawer>
@@ -77,6 +61,11 @@
 </template>
 
 <script setup lang="ts">
+import { usePagesStore } from '~/stores/pages';
+
+const pagesStore = usePagesStore();
+const { selectedPage, pages } = storeToRefs(pagesStore);
+
 const topOfPage = ref(true);
 const visibleRight = ref(false);
 
@@ -101,7 +90,7 @@ onMounted(() => {
 })
 
 const navbarBg = computed(() => {
-    if (route.path === "/" || route.path === "/sound" || route.path === "/travel" || route.path === "/design") {
+    if (route.path === "/" || selectedPage.value?.hasBanner) {
         if (!topOfPage.value) {
             return "bg-zinc-800/70";
         }

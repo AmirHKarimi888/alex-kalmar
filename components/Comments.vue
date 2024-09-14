@@ -5,10 +5,16 @@
         </div>
         
         <ul>
-            <li v-for="comment in comments" :key="comment?.id" class="border-b py-5 box-border w-full text-wrap">
-                <div>
-                    <span class="text-sm">At {{ created(comment) }} by <span class="font-bold">{{ comment?.name }}</span></span>
-                    <span class="text-xs text-zinc-500 inline-block">{{comment?.email}}</span>
+            <li v-for="comment in comments" :key="comment?.id" class="border-t py-5 box-border w-full text-wrap">
+                <div class="flex justify-between">
+                    <span>
+                        <span class="text-sm">At {{ created(comment) }} by <span class="font-bold">{{ comment?.name }}</span></span>
+                        <span class="text-xs text-zinc-500 block">{{comment?.email}}</span>
+                    </span>
+
+                    <span v-if="isCommented(comment)" class="cursor-pointer" @click="removeComment(comment)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6zM8 9h8v10H8zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                    </span>
                 </div>
 
                 <div class="w-full overflow-hidden text-zinc-700 pt-3">
@@ -24,7 +30,7 @@ import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
 const { comments } = storeToRefs(postsStore);
-const { getComment } = postsStore;
+const { getComment, deleteComment } = postsStore;
 
 const props = defineProps<{
     post: any
@@ -35,9 +41,20 @@ const getFormattedDate = useDateFormatter();
 const created = (comment: any) => getFormattedDate(comment?.created);
 
 props.post?.comments.forEach(async (comment: any) => {
-    comments.value.push(await getComment(comment))
+    comments.value.unshift(await getComment(comment));
 })
 
+const isCommented = (comment: any) => JSON.parse(localStorage.getItem("commented") as any).includes(comment?.id);
+
+const removeComment = async (comment: any) => {
+    await deleteComment(comment?.id)
+    .then(() => comments.value = comments.value.filter((c: any) => c?.id !== comment?.id))
+    .then(() => {
+        let coms = JSON.parse(localStorage.getItem("commented") as any);
+        coms = coms.filter((c: any) => c !== comment?.id);
+        localStorage.setItem("commented", JSON.stringify(coms));
+    })
+}
 </script>
 
 <style scoped>

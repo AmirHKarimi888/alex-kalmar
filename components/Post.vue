@@ -88,7 +88,7 @@ const updated = computed(() => getFormattedDate(selectedPost.value?.updated));
 
 const id = route.params?.id as string;
 
-const isLiked = computed(() => JSON.parse(localStorage.getItem("likedPosts") as any).includes(selectedPost.value?.id))
+const isLiked = computed(() => JSON.parse(localStorage.getItem("likedPosts") as any).includes(selectedPost.value?.id));
 
 try {
     await getPost(id)

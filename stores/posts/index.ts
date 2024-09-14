@@ -51,6 +51,7 @@ export const usePostsStore = defineStore("posts", () => {
         })
     }
 
+    "commented" in localStorage ? null : localStorage.setItem("commented", "[]");
     const leaveComment = async (comment: any, post: any) => {
         await pb.collection("comments")
         .create(comment)
@@ -58,6 +59,10 @@ export const usePostsStore = defineStore("posts", () => {
             await pb.collection("posts")
             .update(post?.id, {
                 comments: [...post?.comments, data?.id]
+            })
+            .then (() => {
+                comments.value.unshift(data);
+                localStorage.setItem("commented", JSON.stringify([...JSON.parse(localStorage.getItem("commented") as any), data?.id]));
             })
         })
     }
