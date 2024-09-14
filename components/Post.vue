@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="w-full p-2 text-zinc-700 mt-5 border-t">
+            <div v-if="selectedPost?.showComments" class="w-full p-2 text-zinc-700 mt-5 border-t">
                 <CommentSection />
                 <Comments :post="selectedPost" />
             </div>

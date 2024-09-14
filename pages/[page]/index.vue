@@ -17,6 +17,10 @@
                 </template>
             </Suspense>
         </div>
+        
+        <div v-if="selectedPage?.hasCustomContent" id="CustomContent" class="">
+
+        </div>
     </div>
 </template>
 
@@ -47,6 +51,10 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
     pageNumber.value = newPage;
     updateThreeMults(pageNumber.value);
 }
+
+onMounted(() => {
+    document.querySelector("#CustomContent")?.insertAdjacentHTML("afterbegin", selectedPage.value?.customContent);
+})
 
 useHead({
     title: `${selectedPage.value ? selectedPage.value?.pageTitle : 'Not Found'} - KALMAR`
