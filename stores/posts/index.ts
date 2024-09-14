@@ -19,7 +19,7 @@ export const usePostsStore = defineStore("posts", () => {
     const getPosts = async (page = 1, perPage = 6, keyWord: string) => {
         await pb.collection('posts').getList(page, perPage, {
             sort: '-created',
-            filter: "show = " + "" + true + "" + " && blogName ~ " + "" + '"' + keyWord + '"' + ""
+            filter: "show = " + "" + true + "" + " && category ~ " + "" + '"' + keyWord + '"' + ""
         })
         .then((data: any) => posts.value = data?.items)
     }
@@ -31,7 +31,7 @@ export const usePostsStore = defineStore("posts", () => {
 
     const getPopularPosts = () => {
         popularPosts.value = 
-        allPosts.value.sort((a: any, b: any) => a?.likes.length - b?.likes.length)
+        allPosts.value.sort((a: any, b: any) => b?.likes.length - a?.likes.length)
         .slice(0, 3)
     }
 

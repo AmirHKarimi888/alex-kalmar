@@ -5,7 +5,7 @@
         </div>
         
         <ul>
-            <li v-for="comment in comments" :key="comment" class="border-b py-5 box-border w-full text-wrap">
+            <li v-for="comment in comments" :key="comment?.id" class="border-b py-5 box-border w-full text-wrap">
                 <div>
                     <span class="text-sm">At {{ created(comment) }} by <span class="font-bold">{{ comment?.name }}</span></span>
                     <span class="text-xs text-zinc-500 inline-block">{{comment?.email}}</span>

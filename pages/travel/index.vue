@@ -6,7 +6,7 @@
                 <div class="flex flex-col justify-center items-center">
                     <Posts :page="page" :perPage="6" :keyWord="'travel'" />
 
-                    <Pagination :currentPageNumber="page" :perPage="6" @changePage="changePage" class="mt-12" />
+                    <Pagination v-if="posts.length !== 0" :currentPageNumber="page" :perPage="6" @changePage="changePage" class="mt-12" />
                 </div>
 
                 <template #fallback>
@@ -18,6 +18,12 @@
 </template>
 
 <script setup lang="ts">
+import { usePostsStore } from '~/stores/posts';
+
+const postsStore = usePostsStore();
+
+const { posts } = storeToRefs(postsStore);
+
 const page = ref(1);
 
 const changePage = (newPage: number, updateThreeMults: Function) => {

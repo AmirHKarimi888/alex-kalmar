@@ -1,9 +1,14 @@
 <template>
-    <div>
+    <!--eslint-disable-->
+    <header>
         <Navbar />
+    </header>
+    <main>
         <slot />
+    </main>
+    <footer>
         <Footer />
-    </div>
+    </footer>
 </template>
 
 <script setup lang="ts">
