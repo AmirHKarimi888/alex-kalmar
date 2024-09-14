@@ -17,12 +17,16 @@
 </template>
 
 <script setup lang="ts">
+import { usePagesStore } from '~/stores/pages';
 import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
 const route = useRoute();
 
 const { posts } = storeToRefs(postsStore);
+
+const pagesStore = usePagesStore();
+const { selectedPage } = storeToRefs(pagesStore);
 
 const id = +route.params?.id;
 
@@ -34,7 +38,11 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
 }
 
 useHead({
-    title: "Design - KALMAR"
+    title: `${selectedPage.value ? selectedPage.value?.pageTitle : 'Not Found'} - KALMAR`,
+    meta: [
+        { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" },
+        { name: selectedPage.value?.pageTitle, content: selectedPage.value?.pageDescription }
+    ]
 })
 </script>
 

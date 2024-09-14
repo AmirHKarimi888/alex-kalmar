@@ -67,7 +67,10 @@
 
 <script setup lang="ts">
 useHead({
-    title: "KALMAR - Designer, Song Writer, Enterpreneur; a Polymath"
+    title: "KALMAR - Designer, Song Writer, Enterpreneur; a Polymath",
+    meta: [
+        { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" }
+    ]
 })
 </script>
 

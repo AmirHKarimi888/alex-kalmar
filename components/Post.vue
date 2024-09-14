@@ -87,7 +87,11 @@ onMounted(() => {
 })
 
 useHead({
-    title: `${selectedPost.value?.title} - KALMAR`
+    title: `${selectedPost.value?.title} - KALMAR`,
+    meta: [
+        { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" },
+        { name: selectedPost.value?.title, content: selectedPost.value?.description }
+    ]
 })
 </script>
 

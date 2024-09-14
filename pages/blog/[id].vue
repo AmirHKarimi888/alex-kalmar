@@ -34,7 +34,10 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
 }
 
 useHead({
-    title: "Blog - KALMAR"
+    title: "Blog - KALMAR",
+    meta: [
+        { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" }
+    ]
 })
 </script>
 
