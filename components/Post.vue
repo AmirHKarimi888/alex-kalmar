@@ -29,7 +29,8 @@
 
                 <div class="flex flex-col text-xs gap-1 my-2 font-bold tracking-wider">
                     <span class="flex items-center gap-1">
-                        Created at {{ created }}
+                        Created at {{ created }}<span v-if="selectedPost?.showAuthor">by {{ selectedPost?.author
+                            }}</span>
                     </span>
                     <span class="flex items-center gap-1">
                         Updated at {{ updated }}
@@ -41,11 +42,18 @@
 
             </div>
 
-            <div class="w-full p-2 text-zinc-700 mt-5">
+            <div class="w-full flex justify-between p-2 text-zinc-700 mt-5">
                 <div class="flex text-xs gap-3 mt-1">
                     <LikeBtn />
                     <CopyToClipBtn />
                 </div>
+            </div>
+
+            <div v-if="selectedPost?.showTags" class="w-full flex justify-end gap-2">
+                <button
+                    v-for="tag in selectedPost?.tags" :key="tag"
+                    @click="router.replace(`/search/${tag}`)"
+                    class="border border-black py-1 px-2 hover:bg-black hover:text-white duration-200 rounded">{{ tag }}</button>
             </div>
 
             <div v-if="selectedPost?.showComments" class="w-full p-2 text-zinc-700 mt-5 border-t">
@@ -61,9 +69,10 @@ import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
 const route = useRoute();
+const router = useRouter();
 
 const { selectedPost } = storeToRefs(postsStore);
-const { getPost, addViews, likePost } = postsStore;
+const { getPost, addViews } = postsStore;
 
 const getFormattedDate = useDateFormatter();
 
@@ -80,6 +89,7 @@ try {
 } catch (err: any) {
     console.log(err?.message);
 }
+
 
 onMounted(() => {
     const postContentEl = document.querySelector("#PostContent") as HTMLElement;

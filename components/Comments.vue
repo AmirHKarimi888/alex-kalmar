@@ -44,6 +44,7 @@ comments.value = [];
 props.post?.comments.forEach(async (comment: any) => {
     comments.value.unshift(await getComment(comment));
 })
+comments.value = comments.value.sort((a: any, b: any) => b?.number - a?.number);
 
 const isCommented = (comment: any) => JSON.parse(localStorage.getItem("commented") as any).includes(comment?.id);
 

@@ -1,18 +1,18 @@
 <template>
     <ul class="flex gap-1">
-        <button @click="router.push(`/${path}/${currentPageNumber - 1}`)"
+        <button @click="router.push(`/${props.path}/${currentPageNumber - 1}`)"
             class="border border-zinc-400 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer disabled:bg-slate-300 disabled:opacity-50 disabled:cursor-auto"
             :disabled="currentPageNumber === 1">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
                 <path fill="currentPageNumberColor" d="M11.67 3.87L9.9 2.1L0 12l9.9 9.9l1.77-1.77L3.54 12z" />
             </svg>
         </button>
-        <button v-for="btn in btns" :key="btn" @click="router.push(`/${path}/${btn}`)"
+        <button v-for="btn in btns" :key="btn" @click="router.push(`/${props.path}/${btn}`)"
             class="border border-zinc-400 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer disabled:bg-slate-300 disabled:opacity-50 disabled:cursor-auto"
             :class="currentPageNumber === btn ? 'bg-zinc-800 text-white' : ''" :disabled="btn > Math.ceil(thisAllPosts.length / perPage)">
             {{ btn }}
         </button>
-        <button @click="router.push(`/${path}/${currentPageNumber + 1}`)"
+        <button @click="router.push(`/${props.path}/${currentPageNumber + 1}`)"
             class="border border-zinc-400 rounded-full w-10 h-10 flex justify-center items-center cursor-pointer disabled:bg-slate-300 disabled:opacity-50 disabled:cursor-auto"
             :disabled="btns[btns.length - 1] + 1 > Math.ceil(thisAllPosts.length / perPage)">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24">
@@ -57,32 +57,22 @@ const { allPosts } = storeToRefs(postsStore);
 
 const thisAllPosts = ref<any[]>([]);
 
-const path = computed(() => {
-    if (route.path.includes("blog")) {
-        return "blog";
-    } else if (route.path.includes("sound")) {
-        return "sound";
-    } else if (route.path.includes("travel")) {
-        return "travel";
-    } else if (route.path.includes("design")) {
-        return "design";
-    }
-})
+const props = defineProps<{
+    currentPageNumber: number,
+    perPage: number,
+    path: string
+}>()
 
 if (route.path.includes("blog")) {
     thisAllPosts.value = allPosts.value;
-} else if (route.path.includes("sound")) {
-    thisAllPosts.value = allPosts.value.filter((post: any) => post?.blogName === "sound")
-} else if (route.path.includes("travel")) {
-    thisAllPosts.value = allPosts.value.filter((post: any) => post?.blogName === "travel")
-} else if (route.path.includes("design")) {
-    thisAllPosts.value = allPosts.value.filter((post: any) => post?.blogName === "design")
+
+} else if (route.path.includes("search")) {
+    thisAllPosts.value = allPosts.value.filter((post: any) => post?.title.toLowerCase().includes(route.params?.word) || post?.description.toLowerCase().includes(route.params?.word));
+    
+} else {
+    thisAllPosts.value = allPosts.value.filter((post: any) => post?.blogName === route.params?.page);
 }
 
-const props = defineProps<{
-    currentPageNumber: number,
-    perPage: number
-}>()
 
 const emit = defineEmits<{
     changePage: [newPage: number, updateThreeMults: Function]

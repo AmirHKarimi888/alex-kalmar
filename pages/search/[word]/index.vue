@@ -3,9 +3,9 @@
         <div class="w-full py-40 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
-                    <Posts :page="page" :perPage="6" :key-word="''" />
+                    <SearchedPosts :page="page" :perPage="6" :keyWord="keyWord" />
 
-                    <Pagination v-if="posts.length !== 0" :currentPageNumber="page" :perPage="6" :path="'blog'" @changePage="changePage" class="mt-12" />
+                    <Pagination v-if="posts.length !== 0" :currentPageNumber="page" :path="`search/${keyWord}`" :perPage="6" @changePage="changePage" class="mt-12" />
                 </div>
 
                 <template #fallback>
@@ -24,7 +24,8 @@ const route = useRoute();
 const postsStore = usePostsStore();
 const { posts } = storeToRefs(postsStore);
 
-const page = ref(+route.params?.id);
+const keyWord = `${route.params?.word}`;
+const page = ref(1);
 
 const changePage = (newPage: number, updateThreeMults: Function) => {
     page.value = newPage;
@@ -32,7 +33,7 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
 }
 
 useHead({
-    title: "Blog - KALMAR",
+    title: `Search For ${keyWord} - KALMAR`,
     meta: [
         { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" }
     ]

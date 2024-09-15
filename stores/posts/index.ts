@@ -24,6 +24,14 @@ export const usePostsStore = defineStore("posts", () => {
         .then((data: any) => posts.value = data?.items)
     }
 
+    const searchPosts = async (page = 1, perPage = 6, keyWord: string) => {
+        await pb.collection('posts').getList(page, perPage, {
+            sort: '-created',
+            filter: "showPost = " + "" + true + "" + " && title ~ " + "" + '"' + keyWord + '"' + "" + " || description ~ " + "" + '"' + keyWord + '"' + ""
+        })
+        .then((data: any) => posts.value = data?.items)
+    }
+
     const getPost = async (id: string) => {
         await pb.collection('posts').getOne(id)
         .then(data => selectedPost.value = data);
@@ -41,7 +49,6 @@ export const usePostsStore = defineStore("posts", () => {
             views: +post?.views + 1
         })
     }
-
 
     "likedPosts" in localStorage ? null : localStorage.setItem("likedPosts", "[]");
     const likePost = async (post: any, likes: number) => {
@@ -74,5 +81,5 @@ export const usePostsStore = defineStore("posts", () => {
         .getOne(id)
     }
 
-    return { posts, popularPosts, selectedPost, allPosts, comments, getPosts, getPopularPosts, getPost, getAllPosts, addViews, likePost, leaveComment, deleteComment, getComment }
+    return { posts, popularPosts, selectedPost, allPosts, comments, getPosts, searchPosts, getPopularPosts, getPost, getAllPosts, addViews, likePost, leaveComment, deleteComment, getComment }
 })

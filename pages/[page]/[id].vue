@@ -3,9 +3,9 @@
         <div class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
-                    <Posts :page="page" :perPage="6" :keyWord="'design'" />
+                    <Posts :page="page" :perPage="6" :keyWord="pageRoute" />
 
-                    <Pagination v-if="posts.length !== 0" :currentPageNumber="page" :perPage="6" @changePage="changePage" class="mt-12" />
+                    <Pagination v-if="posts.length !== 0" :currentPageNumber="page" :perPage="6" :path="pageRoute" @changePage="changePage" class="mt-12" />
                 </div>
 
                 <template #fallback>
@@ -28,9 +28,8 @@ const { posts } = storeToRefs(postsStore);
 const pagesStore = usePagesStore();
 const { selectedPage } = storeToRefs(pagesStore);
 
-const id = +route.params?.id;
-
-const page = ref(id);
+const pageRoute = `${route.params?.page}`;
+const page = ref(+route.params?.id);
 
 const changePage = (newPage: number, updateThreeMults: Function) => {
     page.value = newPage;

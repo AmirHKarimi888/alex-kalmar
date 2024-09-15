@@ -5,7 +5,7 @@
                 <Post />
     
                 <template #fallback>
-                    <div class="w-full h-screen flex justify-center items-center">
+                    <div class="w-full min-h-screen flex justify-center items-center">
                         <Spinner />
                     </div>
                 </template>

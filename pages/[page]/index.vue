@@ -9,9 +9,9 @@
             class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
-                    <Posts :page="pageNumber" :perPage="6" :keyWord="pageRoute" />
+                    <Posts :page="page" :perPage="6" :keyWord="pageRoute" />
 
-                    <Pagination v-if="posts.length !== 0" :currentPageNumber="pageNumber" :perPage="6"
+                    <Pagination v-if="posts.length !== 0" :currentPageNumber="page" :perPage="6" :path="pageRoute"
                         @changePage="changePage" class="mt-12" />
                 </div>
 
@@ -41,7 +41,7 @@ const { selectedPage, categoryPages, otherPages } = storeToRefs(pagesStore);
 const { getPage, getAllPages } = pagesStore;
 
 const pageRoute = `${route.params?.page}`;
-const pageNumber = ref(1);
+const page = ref(1);
 
 try {
     if (categoryPages.value.length !== 0 && otherPages.value.length !== 0) {
@@ -81,8 +81,8 @@ try {
 }
 
 const changePage = (newPage: number, updateThreeMults: Function) => {
-    pageNumber.value = newPage;
-    updateThreeMults(pageNumber.value);
+    page.value = newPage;
+    updateThreeMults(page.value);
 }
 
 onMounted(() => {

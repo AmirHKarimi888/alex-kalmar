@@ -46,6 +46,7 @@ const { leaveComment } = postsStore;
 const name = ref("");
 const email = ref("");
 const message = ref("");
+const number = () => selectedPost.value?.comments.length === 0 ? 1 : comments.value?.sort((a: any, b: any) => b?.number - a?.number)[0]?.number;
 
 const leave = async () => {
   try {
@@ -53,6 +54,7 @@ const leave = async () => {
       name: name.value,
       email: email.value,
       message: message.value,
+      number: number() + 1
     }
       , selectedPost.value)
 
