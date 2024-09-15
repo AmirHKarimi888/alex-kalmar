@@ -18,20 +18,20 @@
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex gap-5 text-zinc-100 font-bold">
 
-                        <li @mouseenter="categoriesDropdown = true" class="cursor-pointer">
+                        <li v-if="otherPages.length !== 0" @mouseenter="othersDropdown = true" class="cursor-pointer">
                             <div>Others</div>
-                            <ul @mouseleave="categoriesDropdown = false" :class="categoriesDropdown ? 'grid' : 'hidden'"
+                            <ul @mouseleave="othersDropdown = false" :class="othersDropdown ? 'grid' : 'hidden'"
                                 class="w-[200px] py-3 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-1 rounded-md">
 
-                                <li v-for="page in otherPages" :key="page?.id" class="p-3 hover:bg-zinc-600/50 rounded-md">
+                                <li v-for="page in otherPages" :key="page?.id" class="p-3 w- hover:bg-zinc-600/50 rounded-md">
                                     <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                                 </li>
                             </ul>
                         </li>
 
-                        <li @mouseenter="othersDropdown = true" class="cursor-pointer">
+                        <li v-if="categoryPages.length !== 0" @mouseenter="categoriesDropdown = true" class="cursor-pointer">
                             <div>Categories</div>
-                            <ul @mouseleave="othersDropdown = false" :class="othersDropdown ? 'grid' : 'hidden'"
+                            <ul @mouseleave="categoriesDropdown = false" :class="categoriesDropdown ? 'grid' : 'hidden'"
                                 class="w-[200px] py-3 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-1 rounded-md">
 
                                 <li v-for="page in categoryPages" :key="page?.id" class="p-3 hover:bg-zinc-600/50 rounded-md">
@@ -64,13 +64,17 @@
                     <NuxtLink to="/blog">Blog</NuxtLink>
                 </li>
 
-                <li v-for="page in categoryPages" :key="page?.id"
-                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                <li v-if="categoryPages.length !== 0" @click="categoriesDropdown = !categoriesDropdown"
+                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md cursor-pointer">Categories</li>
+                <li v-if="categoriesDropdown" v-for="page in categoryPages" :key="page?.id"
+                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md cursor-pointer">
                     <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                 </li>
 
-                <li v-for="page in otherPages" :key="page?.id" 
-                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                <li v-if="otherPages.length !== 0" @click="othersDropdown = !othersDropdown"
+                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md cursor-pointer">Others</li>
+                <li v-if="othersDropdown" v-for="page in otherPages" :key="page?.id"
+                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md cursor-pointer">
                     <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                 </li>
             </ul>
