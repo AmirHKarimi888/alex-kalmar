@@ -38,7 +38,7 @@ const changePage = (newPage: number, updateThreeMults: Function) => {
 }
 
 useHead({
-    title: `${selectedPage.value ? selectedPage.value?.pageTitle : 'Not Found'} - KALMAR`,
+    title: `${selectedPage.value?.showPage ? selectedPage.value?.pageTitle : 'Not Found'} - KALMAR`,
     meta: [
         { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" },
         { name: selectedPage.value?.pageTitle, content: selectedPage.value?.pageDescription }

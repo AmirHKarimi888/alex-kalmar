@@ -1,26 +1,29 @@
 <template>
     <div>
 
-        <NotFound v-if="!selectedPage" />
+        <NotFound v-if="!selectedPage?.showPage" />
 
         <Jumbotron v-if="selectedPage?.hasBanner" :page="selectedPage" />
-        <div v-if="selectedPage?.hasPosts" id="next" class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
+
+        <section v-if="selectedPage?.hasPosts" id="next"
+            class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
                     <Posts :page="pageNumber" :perPage="6" :keyWord="pageRoute" />
 
-                    <Pagination v-if="posts.length !== 0" :currentPageNumber="pageNumber" :perPage="6" @changePage="changePage" class="mt-12" />
+                    <Pagination v-if="posts.length !== 0" :currentPageNumber="pageNumber" :perPage="6"
+                        @changePage="changePage" class="mt-12" />
                 </div>
 
                 <template #fallback>
                     <Spinner />
                 </template>
             </Suspense>
-        </div>
-        
-        <div v-if="selectedPage?.hasCustomContent" id="CustomContent" class="">
+        </section>
 
-        </div>
+        <section v-if="selectedPage?.hasCustomContent" id="CustomContent" class="w-full h-screen flex justify-center">
+
+        </section>
     </div>
 </template>
 
@@ -35,25 +38,46 @@ const { posts } = storeToRefs(postsStore);
 
 const pagesStore = usePagesStore();
 const { selectedPage, categoryPages, otherPages } = storeToRefs(pagesStore);
-const { getPage } = pagesStore;
+const { getPage, getAllPages } = pagesStore;
 
 const pageRoute = `${route.params?.page}`;
 const pageNumber = ref(1);
 
 try {
-  for (let page of categoryPages.value) {
-    if (page?.pageRoute === pageRoute) {
-        await getPage(pageRoute, "categoryPages");
-    }
-  }
+    if (categoryPages.value.length !== 0 && otherPages.value.length !== 0) {
+        for (let page of categoryPages.value) {
+            if (page?.pageRoute === pageRoute) {
+                getPage(pageRoute, "categoryPages");
+            }
+        }
 
-  for (let page of otherPages.value) {
-    if (page?.pageRoute === pageRoute) {
-        await getPage(pageRoute, "otherPages");
+        for (let page of otherPages.value) {
+            if (page?.pageRoute === pageRoute) {
+                getPage(pageRoute, "otherPages");
+            }
+        }
+
+
+    } else {
+        await getAllPages("categoryPages")
+            .then(async () => await getAllPages("otherPages"))
+            .then(() => {
+                for (let page of categoryPages.value) {
+                    if (page?.pageRoute === pageRoute) {
+                        getPage(pageRoute, "categoryPages");
+                    }
+                }
+
+                for (let page of otherPages.value) {
+                    if (page?.pageRoute === pageRoute) {
+                        getPage(pageRoute, "otherPages");
+                    }
+                }
+            })
     }
-  }
+    
 } catch (err: any) {
-  null;
+    null;
 }
 
 const changePage = (newPage: number, updateThreeMults: Function) => {
@@ -66,7 +90,7 @@ onMounted(() => {
 })
 
 useHead({
-    title: `${selectedPage.value ? selectedPage.value?.pageTitle : 'Not Found'} - KALMAR`,
+    title: `${selectedPage.value?.showPage ? selectedPage.value?.pageTitle : 'Not Found'} - KALMAR`,
     meta: [
         { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" },
         { name: selectedPage.value?.pageTitle, content: selectedPage.value?.pageDescription }
@@ -74,6 +98,4 @@ useHead({
 })
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

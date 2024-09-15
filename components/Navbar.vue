@@ -18,7 +18,7 @@
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex gap-5 text-zinc-100 font-bold">
 
-                        <li v-if="otherPages.length !== 0" @mouseenter="othersDropdown = true" class="cursor-pointer">
+                        <li v-if="otherPages.length !== 0" @mouseenter="othersDropdown = true" @click="othersDropdown = !othersDropdown" class="cursor-pointer">
                             <div>Others</div>
                             <ul @mouseleave="othersDropdown = false" :class="othersDropdown ? 'grid' : 'hidden'"
                                 class="w-[200px] py-3 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-1 rounded-md">
@@ -29,7 +29,7 @@
                             </ul>
                         </li>
 
-                        <li v-if="categoryPages.length !== 0" @mouseenter="categoriesDropdown = true" class="cursor-pointer">
+                        <li v-if="categoryPages.length !== 0" @mouseenter="categoriesDropdown = true" @click="categoriesDropdown = !categoriesDropdown" class="cursor-pointer">
                             <div>Categories</div>
                             <ul @mouseleave="categoriesDropdown = false" :class="categoriesDropdown ? 'grid' : 'hidden'"
                                 class="w-[200px] py-3 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-1 rounded-md">

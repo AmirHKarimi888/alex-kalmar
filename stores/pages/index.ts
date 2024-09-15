@@ -19,12 +19,19 @@ export const usePagesStore = defineStore("pages", () => {
         })
     }
 
-    const getPage = async (route: string, collectionName: string) => {
-        await pb.collection(collectionName).getFullList({
-            sort: '-created',
-            filter: "showPage = " + "" + true + "" + " && " + "" + "pageRoute = " + '"' + route + '"' + ""
-        })
-        .then((data: any) => selectedPage.value = data[0])
+    const getPage = (route: string, collectionName: string) => {
+        // await pb.collection(collectionName).getFullList({
+        //     sort: '-created',
+        //     filter: "showPage = " + "" + true + "" + " && " + "" + "pageRoute = " + '"' + route + '"' + ""
+        // })
+        // .then((data: any) => selectedPage.value = data[0])
+
+        if (collectionName === "categoryPages") {
+            selectedPage.value = categoryPages.value.find((page: any) => page?.pageRoute === route);
+
+        } else if (collectionName === "otherPages") {
+            selectedPage.value = otherPages.value.find((page: any) => page?.pageRoute === route);
+        }
     }
 
     const getIndexPage = async () => {
