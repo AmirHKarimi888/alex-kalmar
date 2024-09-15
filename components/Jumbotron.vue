@@ -22,9 +22,11 @@ const props = defineProps<{
     page: any
 }>()
 
+const route = useRoute();
+
 const poster = ref("");
 
-await fetch(`${dbUrl}api/files/categoryPages/${props.page?.id}/${props.page?.bannerPoster}`)
+await fetch(`${dbUrl}api/files/${route.path === "/" ? "indexPage" : "categoryPages"}/${props.page?.id}/${props.page?.bannerPoster}`)
     .then(response => response.blob())
     .then(blob => {
         poster.value = URL.createObjectURL(blob);

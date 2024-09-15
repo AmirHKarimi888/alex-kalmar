@@ -1,8 +1,8 @@
 <template>
     <div>
-        <MainJumbotron />
+        <Jumbotron :page="selectedPage" />
 
-        <section class="w-[85%] min-h-screen flex flex-col lg:flex-row justify-center items-center gap-16 mx-auto">
+        <section id="next" class="w-[85%] min-h-screen flex flex-col lg:flex-row justify-center items-center gap-16 mx-auto">
             <iframe class="max-sm:w-full sm:w-full lg:w-[70%] aspect-video" src="https://www.youtube.com/embed/iiMYiJgkcn8?si=rr28BOiBCXx84bPB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
             <div class="flex flex-col gap-10 max-sm:w-full sm:w-full lg:w-[30%]">
@@ -34,7 +34,7 @@
         </section>
 
         <section>
-            <div id="PopularPosts" class="w-full py-20 min-h-screen flex flex-col justify-center items-center">
+            <div class="w-full py-20 min-h-screen flex flex-col justify-center items-center">
                 <div class="md:w-[80%] sm:w-[85%] max-sm:w-[90%]">
                     <h3 class="mb-5 font-bold text-lg tracking-wider">Popular Posts</h3>
                 </div>
@@ -43,7 +43,7 @@
         </section>
 
         <section>
-            <div id="LatestPosts" class="w-full py-20 min-h-screen flex flex-col justify-center items-center">
+            <div class="w-full py-20 min-h-screen flex flex-col justify-center items-center">
                 <Suspense>
                     <div class="flex flex-col justify-center items-center">
                         <div class="md:w-[80%] sm:w-[85%] max-sm:w-[90%]">
@@ -59,6 +59,10 @@
             </div>
         </section>
 
+        <section v-if="selectedPage?.hasCustomContent" id="CustomContent" class="">
+
+        </section>
+
         <section>
             <Contact />
         </section>
@@ -66,10 +70,28 @@
 </template>
 
 <script setup lang="ts">
+import { usePagesStore } from '~/stores/pages';
+
+const pagesStore = usePagesStore();
+const { selectedPage } = storeToRefs(pagesStore);
+const { getIndexPage } = pagesStore;
+
+
+try {
+  await getIndexPage();
+} catch (err: any) {
+  null;
+}
+
+onMounted(() => {
+    document.querySelector("#CustomContent")?.insertAdjacentHTML("afterbegin", selectedPage.value?.customContent);
+})
+
 useHead({
     title: "KALMAR - Designer, Song Writer, Enterpreneur; a Polymath",
     meta: [
-        { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" }
+        { name: "KALMAR", content: "Designer, Song Writer, Enterpreneur; a Polymath" },
+        { name: selectedPage.value?.pageTitle, content: selectedPage.value?.pageDescription }
     ]
 })
 </script>

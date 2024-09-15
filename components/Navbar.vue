@@ -18,12 +18,23 @@
                 <div class="hidden w-full md:block md:w-auto" id="navbar-default">
                     <ul class="flex gap-5 text-zinc-100 font-bold">
 
-                        <li @mouseenter="dropdownToggle = true" class="cursor-pointer">
-                            <div>Categories</div>
-                            <ul @mouseleave="dropdownToggle = false" :class="dropdownToggle ? 'grid' : 'hidden'"
-                                class="w-[200px] p-5 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-2">
+                        <li @mouseenter="categoriesDropdown = true" class="cursor-pointer">
+                            <div>Others</div>
+                            <ul @mouseleave="categoriesDropdown = false" :class="categoriesDropdown ? 'grid' : 'hidden'"
+                                class="w-[200px] py-3 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-1 rounded-md">
 
-                                <li v-for="page in pages" :key="page?.id">
+                                <li v-for="page in otherPages" :key="page?.id" class="p-3 hover:bg-zinc-600/50 rounded-md">
+                                    <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li @mouseenter="othersDropdown = true" class="cursor-pointer">
+                            <div>Categories</div>
+                            <ul @mouseleave="othersDropdown = false" :class="othersDropdown ? 'grid' : 'hidden'"
+                                class="w-[200px] py-3 bg-zinc-700/50 mt-3 fixed top-[68px] justify-center gap-1 rounded-md">
+
+                                <li v-for="page in categoryPages" :key="page?.id" class="p-3 hover:bg-zinc-600/50 rounded-md">
                                     <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                                 </li>
                             </ul>
@@ -53,7 +64,12 @@
                     <NuxtLink to="/blog">Blog</NuxtLink>
                 </li>
 
-                <li v-for="page in pages" :key="page?.id"
+                <li v-for="page in categoryPages" :key="page?.id"
+                    class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
+                    <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
+                </li>
+
+                <li v-for="page in otherPages" :key="page?.id" 
                     class="py-3 flex justify-center hover:bg-zinc-100 dark:bg-zinc-700 rounded-md">
                     <NuxtLink :to="`/${page?.pageRoute}`">{{ page?.pageTitle }}</NuxtLink>
                 </li>
@@ -66,12 +82,25 @@
 import { usePagesStore } from '~/stores/pages';
 
 const pagesStore = usePagesStore();
-const { selectedPage, pages } = storeToRefs(pagesStore);
+const { selectedPage, categoryPages, otherPages } = storeToRefs(pagesStore);
 
 const topOfPage = ref(true);
 const visibleRight = ref(false);
 
-const dropdownToggle = ref(false);
+const categoriesDropdown = ref(false);
+const othersDropdown = ref(false);
+
+watch(categoriesDropdown, () => {
+    if (categoriesDropdown.value) {
+        othersDropdown.value = false;
+    }
+});
+watch(othersDropdown, () => {
+    if (othersDropdown.value) {
+        categoriesDropdown.value = false;
+    }
+});
+
 
 const route = useRoute();
 

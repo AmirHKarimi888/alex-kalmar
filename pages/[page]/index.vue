@@ -3,7 +3,7 @@
 
         <NotFound v-if="!selectedPage" />
 
-        <PagesJumbotron v-if="selectedPage?.hasBanner" :page="selectedPage" />
+        <Jumbotron v-if="selectedPage?.hasBanner" :page="selectedPage" />
         <div v-if="selectedPage?.hasPosts" id="next" class="w-full pt-40 pb-12 min-h-screen flex flex-col justify-center items-center">
             <Suspense>
                 <div class="flex flex-col justify-center items-center">
@@ -34,15 +34,24 @@ const postsStore = usePostsStore();
 const { posts } = storeToRefs(postsStore);
 
 const pagesStore = usePagesStore();
-const { selectedPage } = storeToRefs(pagesStore);
-const { getAllPages, getPage } = pagesStore;
+const { selectedPage, categoryPages, otherPages } = storeToRefs(pagesStore);
+const { getPage } = pagesStore;
 
 const pageRoute = `${route.params?.page}`;
 const pageNumber = ref(1);
 
 try {
-  await getAllPages()
-  .then(() => getPage(pageRoute));
+  for (let page of categoryPages.value) {
+    if (page?.pageRoute === pageRoute) {
+        await getPage(pageRoute, "categoryPages");
+    }
+  }
+
+  for (let page of otherPages.value) {
+    if (page?.pageRoute === pageRoute) {
+        await getPage(pageRoute, "otherPages");
+    }
+  }
 } catch (err: any) {
   null;
 }

@@ -19,7 +19,13 @@ useSeoMeta({
 })
 
 try {
-  await getAllPages();
+  await getAllPages("categoryPages");
+} catch (err: any) {
+  null;
+}
+
+try {
+  await getAllPages("otherPages");
 } catch (err: any) {
   null;
 }
