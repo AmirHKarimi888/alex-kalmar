@@ -38,7 +38,7 @@
                 </div>
 
                 <div>
-                    <img v-if="post?.showPoster" class="w-full aspect-square" :src="post?.poster" :alt="post?.title">
+                    <img v-if="post?.showPoster" class="w-full aspect-square" :src="post?.blobPoster" :alt="post?.title">
                     <img v-else class="w-full aspect-square" src="../assets/post-default.jpg">                    
                 </div>
             </div>
@@ -93,7 +93,7 @@ const getThesePosts = async () => {
                     await fetch(`${dbUrl}api/files/posts/${post?.id}/${post?.poster}`)
                         .then(response => response.blob())
                         .then(blob => {
-                            post.poster = URL.createObjectURL(blob);
+                            post.blobPoster = URL.createObjectURL(blob);
                         })
                 })
             })

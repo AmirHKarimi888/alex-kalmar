@@ -25,12 +25,14 @@ export const usePostsStore = defineStore("posts", () => {
     }
 
     const searchPosts = async (page = 1, perPage = 6, keyWord: string) => {
+        //page = 1, perPage = 6, keyWord: string
         // await pb.collection('posts').getList(page, perPage, {
         //     sort: '-created',
         //     filter: "showPost = " + "" + true + "" + " && title ~ " + "" + '"' + keyWord + '"' + "" + " || description ~ " + "" + '"' + keyWord + '"' + "" + " || category ~ " + "" + '"' + keyWord + '"' + ""
         // })
         // .then((data: any) => posts.value = data?.items)
         posts.value = allPosts.value.filter((post: any) => post?.title.toLowerCase().includes(keyWord) || post?.description.toLowerCase().includes(keyWord) || post?.category.toLowerCase().includes(keyWord) || post?.tags.includes(keyWord));
+        posts.value = posts.value.slice((perPage * (page - 1)), (perPage * (page)));
     }
 
     const getPost = async (id: string) => {
