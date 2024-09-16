@@ -17,11 +17,13 @@ export const usePostsStore = defineStore("posts", () => {
     }
 
     const getPosts = async (page = 1, perPage = 6, keyWord: string) => {
-        await pb.collection('posts').getList(page, perPage, {
-            sort: '-created',
-            filter: "showPost = " + "" + true + "" + " && category ~ " + "" + '"' + keyWord + '"' + ""
-        })
-        .then((data: any) => posts.value = data?.items)
+        // await pb.collection('posts').getList(page, perPage, {
+        //     sort: '-created',
+        //     filter: "showPost = " + "" + true + "" + " && category ~ " + "" + '"' + keyWord + '"' + ""
+        // })
+        // .then((data: any) => posts.value = data?.items)
+        posts.value = allPosts.value.filter((post: any) => post?.category.toLowerCase().includes(keyWord));
+        posts.value = posts.value.slice((perPage * (page - 1)), (perPage * (page)));
     }
 
     const searchPosts = async (page = 1, perPage = 6, keyWord: string) => {
