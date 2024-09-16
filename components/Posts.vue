@@ -38,7 +38,8 @@
                 </div>
 
                 <div>
-                    <img class="w-full aspect-square" :src="post?.poster" :alt="post?.title">
+                    <img v-if="post?.showPoster" class="w-full aspect-square" :src="post?.poster" :alt="post?.title">
+                    <img v-else class="w-full aspect-square" src="../assets/post-default.jpg">                    
                 </div>
             </div>
 
@@ -50,7 +51,7 @@
                 <div>
                     <NuxtLink :to="`/posts/${post?.id}`">
                         <button
-                            class="p-2 bg-black text-white border hover:border-black hover:bg-white hover:text-black duration-200 mt-3 tracking-wider">Read
+                            class="p-2 bg-black text-white border hover:border-black hover:bg-white hover:text-black duration-200 mt-3 tracking-wider rounded-md">Read
                             Full</button>
                     </NuxtLink>
                 </div>

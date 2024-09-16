@@ -140,7 +140,7 @@ const navbarBg = computed(() => {
 watch(
     () => route.fullPath,
     () => {
-        console.log("route fullPath updated", route.fullPath);
+        // console.log("route fullPath updated", route.fullPath);
 
         if (route.fullPath.includes("blog") || route.fullPath.includes("posts") || route.fullPath.includes("search")) {
             selectedPage.value = {};

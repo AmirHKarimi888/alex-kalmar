@@ -47,9 +47,13 @@
                     <LikeBtn />
                     <CopyToClipBtn />
                 </div>
+
+                <div v-if="selectedPost?.category" class="w-full flex justify-end items-center">
+                    <p>Category: <span class="text-yellow-500 cursor-pointer" @click="router.replace(`/${selectedPost?.category}`)">{{selectedPost?.category.split("")[0].toUpperCase() + selectedPost?.category.slice(1)}}</span></p>
+                </div>
             </div>
 
-            <div v-if="selectedPost?.showTags" class="w-full flex justify-end gap-2">
+            <div v-if="selectedPost?.showTags" class="w-full flex justify-end gap-2 mt-2">
                 <button
                     v-for="tag in selectedPost?.tags" :key="tag"
                     @click="router.replace(`/search/${tag}`)"

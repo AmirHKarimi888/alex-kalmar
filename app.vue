@@ -6,10 +6,12 @@
 
 <script setup lang="ts">
 import { usePagesStore } from './stores/pages';
+import { usePostsStore } from '~/stores/posts';
 
+const postsStore = usePostsStore();
+const { getAllPosts } = postsStore;
 
 const pagesStore = usePagesStore();
-
 const { getAllPages } = pagesStore;
 
 useSeoMeta({
@@ -17,6 +19,12 @@ useSeoMeta({
   ogDescription: 'KALMAR - Designer, Song Writer, Enterpreneur; a Polymath',
   ogImage: './logo.png',
 })
+
+try {
+    await getAllPosts();
+} catch (err: any) {
+    console.log(err?.message);
+}
 
 try {
   await getAllPages("categoryPages");

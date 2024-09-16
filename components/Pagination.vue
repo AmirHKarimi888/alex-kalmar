@@ -67,7 +67,7 @@ if (route.path.includes("blog")) {
     thisAllPosts.value = allPosts.value;
 
 } else if (route.path.includes("search")) {
-    thisAllPosts.value = allPosts.value.filter((post: any) => post?.title.toLowerCase().includes(route.params?.word) || post?.description.toLowerCase().includes(route.params?.word));
+    thisAllPosts.value = allPosts.value.filter((post: any) => post?.title.toLowerCase().includes(route.params?.word) || post?.description.toLowerCase().includes(route.params?.word) || post?.category.toLowerCase().includes(route.params?.word) || post?.tags.includes(route.params?.word));
     
 } else {
     thisAllPosts.value = allPosts.value.filter((post: any) => post?.blogName === route.params?.page);
