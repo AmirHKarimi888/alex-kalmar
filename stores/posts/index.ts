@@ -22,7 +22,11 @@ export const usePostsStore = defineStore("posts", () => {
         //     filter: "showPost = " + "" + true + "" + " && category ~ " + "" + '"' + keyWord + '"' + ""
         // })
         // .then((data: any) => posts.value = data?.items)
-        posts.value = allPosts.value.filter((post: any) => post?.category.toLowerCase().includes(keyWord));
+        if (keyWord === "") {
+            posts.value = allPosts.value;
+        } else {
+            posts.value = allPosts.value.filter((post: any) => post?.category.toLowerCase() === keyWord.toLowerCase());
+        }
         posts.value = posts.value.slice((perPage * (page - 1)), (perPage * (page)));
     }
 
@@ -33,13 +37,14 @@ export const usePostsStore = defineStore("posts", () => {
         //     filter: "showPost = " + "" + true + "" + " && title ~ " + "" + '"' + keyWord + '"' + "" + " || description ~ " + "" + '"' + keyWord + '"' + "" + " || category ~ " + "" + '"' + keyWord + '"' + ""
         // })
         // .then((data: any) => posts.value = data?.items)
-        posts.value = allPosts.value.filter((post: any) => post?.title.toLowerCase().includes(keyWord) || post?.description.toLowerCase().includes(keyWord) || post?.category.toLowerCase().includes(keyWord) || post?.tags.includes(keyWord));
+        posts.value = allPosts.value.filter((post: any) => post?.title.toLowerCase().includes(keyWord.toLowerCase()) || post?.description.toLowerCase().includes(keyWord.toLowerCase()) || post?.category.toLowerCase().includes(keyWord.toLowerCase()) || post?.tags.includes(keyWord.toLowerCase()));
         posts.value = posts.value.slice((perPage * (page - 1)), (perPage * (page)));
     }
 
     const getPost = async (id: string) => {
-        await pb.collection('posts').getOne(id)
-        .then(data => selectedPost.value = data);
+        // await pb.collection('posts').getOne(id)
+        // .then(data => selectedPost.value = data);
+        selectedPost.value = allPosts.value.find((post: any) => post?.id === id);
     }
 
     const getPopularPosts = () => {

@@ -29,7 +29,7 @@
 import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
-const { comments } = storeToRefs(postsStore);
+const { comments, selectedPost, allPosts } = storeToRefs(postsStore);
 const { getComment, deleteComment } = postsStore;
 
 const props = defineProps<{
@@ -50,11 +50,19 @@ const isCommented = (comment: any) => JSON.parse(localStorage.getItem("commented
 
 const removeComment = async (comment: any) => {
     await deleteComment(comment?.id)
-    .then(() => comments.value = comments.value.filter((c: any) => c?.id !== comment?.id))
     .then(() => {
         let coms = JSON.parse(localStorage.getItem("commented") as any);
         coms = coms.filter((c: any) => c !== comment?.id);
         localStorage.setItem("commented", JSON.stringify(coms));
+        selectedPost.value.comments = selectedPost.value?.comments.filter((c: any) => c !== comment?.id);
+
+        comments.value = comments.value.filter((c: any) => c?.id !== comment?.id);
+
+        allPosts.value.filter((post: any) => {
+          if (post?.id === selectedPost.value?.id) {
+            post.comments = selectedPost.value?.comments;
+          }
+        });
     })
 }
 </script>

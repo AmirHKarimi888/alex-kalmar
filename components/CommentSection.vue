@@ -40,7 +40,7 @@
 import { usePostsStore } from '~/stores/posts';
 
 const postsStore = usePostsStore();
-const { selectedPost, comments } = storeToRefs(postsStore);
+const { selectedPost, comments, allPosts, posts } = storeToRefs(postsStore);
 const { leaveComment } = postsStore;
 
 const name = ref("");
@@ -61,6 +61,11 @@ const leave = async () => {
       .then((data: any) => {
         localStorage.setItem("commented", JSON.stringify([...JSON.parse(localStorage.getItem("commented") as any), data?.id]));
         selectedPost.value = { ...selectedPost.value, comments: [...selectedPost.value?.comments, data?.id] };
+        allPosts.value.filter((post: any) => {
+          if (post?.id === selectedPost.value?.id) {
+            post.comments = selectedPost.value?.comments;
+          }
+        });
         comments.value.unshift(data);
 
         name.value = "";

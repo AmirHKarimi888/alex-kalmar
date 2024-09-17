@@ -49,15 +49,16 @@
                 </div>
 
                 <div v-if="selectedPost?.category" class="w-full flex justify-end items-center">
-                    <p>Category: <span class="text-yellow-500 cursor-pointer" @click="router.replace(`/${selectedPost?.category}`)">{{selectedPost?.category.split("")[0].toUpperCase() + selectedPost?.category.slice(1)}}</span></p>
+                    <p>Category: <span class="text-yellow-500 cursor-pointer"
+                            @click="router.replace(`/${selectedPost?.category}`)">{{ selectedPost?.category.split("")[0].toUpperCase()
+                                + selectedPost?.category.slice(1)}}</span></p>
                 </div>
             </div>
 
             <div v-if="selectedPost?.showTags" class="w-full flex justify-end gap-2 mt-2">
-                <button
-                    v-for="tag in selectedPost?.tags" :key="tag"
-                    @click="router.replace(`/search/${tag}`)"
-                    class="border border-black py-1 px-2 hover:bg-black hover:text-white duration-200 rounded">{{ tag }}</button>
+                <button v-for="tag in selectedPost?.tags" :key="tag" @click="router.replace(`/search/${tag}`)"
+                    class="border border-black py-1 px-2 hover:bg-black hover:text-white duration-200 rounded">{{ tag
+                    }}</button>
             </div>
 
             <div v-if="selectedPost?.showComments" class="w-full p-2 text-zinc-700 mt-5 border-t">
@@ -75,7 +76,7 @@ const postsStore = usePostsStore();
 const route = useRoute();
 const router = useRouter();
 
-const { selectedPost } = storeToRefs(postsStore);
+const { selectedPost, allPosts } = storeToRefs(postsStore);
 const { getPost, addViews } = postsStore;
 
 const getFormattedDate = useDateFormatter();
@@ -88,7 +89,15 @@ const id = route.params?.id as string;
 try {
     await getPost(id)
         .then(async () => await addViews(selectedPost.value))
-        .then(() => selectedPost.value = { ...selectedPost.value, views: +selectedPost.value?.views + 1 })
+        .then(() => {
+            selectedPost.value = { ...selectedPost.value, views: +selectedPost.value?.views + 1 };
+
+            allPosts.value.filter((post: any) => {
+                if (post?.id === selectedPost.value?.id) {
+                    post.views = selectedPost.value?.views;
+                }
+            });
+        })
 
 } catch (err: any) {
     console.log(err?.message);
