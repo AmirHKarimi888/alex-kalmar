@@ -59,7 +59,7 @@
             </div>
         </section>
 
-        <section v-if="selectedPage?.hasCustomContent" id="CustomContent" class="">
+        <section v-if="selectedPage?.hasCustomContent" id="CustomContent" class="w-full h-screen flex justify-center items-center">
 
         </section>
 
@@ -96,4 +96,19 @@ useHead({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+#CustomContent iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+#CustomContent img {
+    width: 100%;
+    aspect-ratio: normal;
+}
+
+#CustomContent video {
+    width: 100%;
+    aspect-ratio: normal;
+}
+</style>

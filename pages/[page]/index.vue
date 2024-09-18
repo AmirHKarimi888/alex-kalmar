@@ -98,4 +98,19 @@ useHead({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+#CustomContent iframe {
+    width: 100%;
+    aspect-ratio: 16/9;
+}
+
+#CustomContent img {
+    width: 100%;
+    aspect-ratio: normal;
+}
+
+#CustomContent video {
+    width: 100%;
+    aspect-ratio: normal;
+}
+</style>

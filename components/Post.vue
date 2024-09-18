@@ -120,10 +120,17 @@ useHead({
 
 <style scoped>
 #PostContent iframe {
-    display: table;
-    margin-left: auto;
-    margin-right: auto;
     width: 100%;
     aspect-ratio: 16/9;
+}
+
+#PostContent img {
+    width: 100%;
+    aspect-ratio: normal;
+}
+
+#PostContent video {
+    width: 100%;
+    aspect-ratio: normal;
 }
 </style>
