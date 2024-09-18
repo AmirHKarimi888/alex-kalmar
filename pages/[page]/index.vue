@@ -21,7 +21,7 @@
             </Suspense>
         </section>
 
-        <section v-if="selectedPage?.hasCustomContent" id="CustomContent" class="w-full h-screen flex justify-center items-center">
+        <section v-if="selectedPage?.hasCustomContent" id="CustomContent" class="w-full min-h-screen mt-32 px-5 flex flex-col justify-center items-center">
 
         </section>
     </div>

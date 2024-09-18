@@ -59,7 +59,7 @@
             </div>
         </section>
 
-        <section v-if="selectedPage?.hasCustomContent" id="CustomContent" class="w-full h-screen flex justify-center items-center">
+        <section v-if="selectedPage?.hasCustomContent" id="CustomContent"  class="w-full min-h-screen p-8 flex flex-col justify-center items-center">
 
         </section>
 
