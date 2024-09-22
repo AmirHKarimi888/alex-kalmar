@@ -9,8 +9,10 @@
                 </div>
 
                 <div>
-                    <img class="w-full lg:aspect-video md:aspect-video sm:aspect-square max-sm:aspect-square"
+                    <img v-if="slotProps.data?.showPoster" class="w-full lg:aspect-video md:aspect-video sm:aspect-square max-sm:aspect-square"
                         :src="slotProps.data?.blobPoster" :alt="slotProps.data?.title">
+                        <img v-else class="w-full lg:aspect-video md:aspect-video sm:aspect-square max-sm:aspect-square"
+                        src="../assets/post-default.jpg" :alt="slotProps.data?.title">
                 </div>
             </div>
 
